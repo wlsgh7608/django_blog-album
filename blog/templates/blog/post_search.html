@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}post_search.html{% endblock title %}
+
+{% block content %}
+<div id='content'>
+    <form action='.' method='post'>
+        {% csrf_token %}
+        <!-- form을 테이블 형식으로 표현 -->
+        {{ form.as_table }}
+        <!-- submit이라는 단어로 제출을 만들었음 -->
+        <input type='submit' value="Submit" />
+    </form>
+
+    <br/><br/>
+
+    {% if object_list %}
+    {% for post in object_list %}
+        <h2><a href = '{{ post.get_absolute_url }}'>{{ post.title }}</a></h2>
+        {{ post.modify_date|date:"N d, Y" }}
+        <p>{{ post.description }}</p>
+    {% endfor %}
+    {% elif search_term %}
+    <b><i>Search Word({{ search_term }}) Not Found !</i></b>
+    {% endif %}
+</div>
+{% endblock %}

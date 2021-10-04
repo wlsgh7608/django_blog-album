@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}post_detail.html{% endblock title %}
+{% block content %}
+<div id='content'>
+    <h2>{{ object.title }}</h2>
+    <p class='other_posts'>
+        <!-- modfy_date 컬럼을 기준으로 이전 객체를 반환, 변경 날짜가 현재 객체보다 오래된 객체가 있는지 확인 -->
+        <!-- 이전 객체(post)ㅡ , get_absolute_url(이전 객체 지칭하는 url 패턴 반환) -> 문자여 텍스트 추ㅕㄱ하고 그 텍스트에 url 링크 연결 -->
+        {% if object.get_previous_by_modify_date %}
+        <!-- modify_date 컬럼을 기준으로 다음 객체를 반환 - 변경 날짜가 현재 객체보다 최신 객체가 있는 지 확인-->
+        <a href="{{ object.get_previous_post.get_absolute_url }}" title="View previous post"> &laquo;--
+            {{  object.get_previous_post }}</a>
+        {% endif %}
+        |
+        {% if object.get_next_by_modify_date %}
+        <!-- modify_date 컬럼을 기준으로 다음 객체를 반환 - 변경 날짜가 현재 객체보다 최신 객체가 있는 지 확인-->
+        <a href="{{ object.get_next_post.get_absolute_url }}" title="View next post"> 
+            {{  object.get_next_post }} -- &raquo;</a>
+        {% endif %}
+    </p>
+
+    <!-- modify_date 속성값을 "j F Y" 포맷으로 출력 -->
+    <p class='date'>{{ object.modify_date|date:"j F Y" }}</p>
+    <br />
+
+    <div class='body'>
+        <!-- 포스트 객체의 내용(content)출력-> linebreak 템플릿 필터는 \n을 인식할 수 있게 함 -->
+        {{ object.content|linebreaks }}
+    </div>
+
+    <div>
+        <!-- b: 볼드체,  -->
+        <b>TAGS: </b>
+        <!-- tagging 패키지에 정의된 커스텀 태그를 사용하기 위하여 tagging_tags 모듈 로드 -->
+        {% load tagging_tags %}
+        <!--  tags_for_object 커스텀 태그를 사용해 object 객체 달려 있는 태그 리스트 추출
+        추출된 태그 리스트는 tags 템플릿 변수에 할당 -->
+        {% tags_for_object object as tags %}
+        {% for tag in tags %}
+        <a href = "{% url 'blog:tagged_object_list' tag.name %}">{{ tag.name }}</a>
+        {% endfor %}
+        <a href = "{% url 'blog:tag_cloud' %}"><i>[ TagCloud ]</i></a>
+    </div>
+</div>
+{% endblock content %}

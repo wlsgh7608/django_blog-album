@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}album_list.html{% endblock title %}
+
+{% block content %}
+<div id = 'content'>
+    <!-- object 객체는 albumDV 클래스형 뷰에서 넘겨주는 context 변수로, 특정 앨범 객체가 담겨있음
+    이 앨범 객체의 name과 description 속성을 inline 기능에 의해 한줄에 출력 -->
+    <h2 style = 'display:inline'>{{ object.name }}</h2>
+    &emsp;<b><i>{{ object.description }}</i></b>
+
+    <hr/>
+    <!-- album-detail클래스는 photo.css에 정의 되어 있음 -->
+    <div class = 'album-detail'>
+        <!-- object.photo_set.all 표현식은 이 앨범 객체에 들어 있는 모든 사진 객체로 구성된 리스트 -->
+        {% for photo in object.photo_set.all %}
+        <div class = 'album-detail-photo'>
+            <a href = "{{ photo.get_absolute_url }}">
+                <img class = 'thumbnail' src= "{{ photo.image.thumb_url }}">
+            </a>
+            <li>{{ photo.title }}</li>
+            <li>{{ photo.upload_date|date:"Y-m-d" }}</li>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

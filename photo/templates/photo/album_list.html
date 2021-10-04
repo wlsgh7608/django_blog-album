@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} album_list.html {% endblock title %}
+
+{% load static %}
+{% block extrastyle %}{% static 'photo/photo.css' %}{% endblock extrastyle %}
+
+{% block content %}
+<!-- content 블록 정의 -->
+<div id = 'content'>
+    {% for item in object_list %}
+    <div class = 'clear_float'>
+        <h2 style = 'display:inline'><a href = "{% url 'photo:album_detail'  item.id %}" >{{ item.name }}</a></h2>
+        &emsp;<b><i>{{ item.description }}</i></b>
+    </div>
+    <hr/>
+    <!-- album_list 클래스는 photo.css 에 정의 되어 있음, -->
+    <div class = 'album-list'>
+        <!-- 특정 앨범 객체에 들어있는 사진 객체 리스트에서 앞에서부터 5개 객체 추출 -->
+        {% for photo in item.photo_set.all|slice:":5" %}
+        <!-- 썸네일 출력할 영역 정의 -->
+        <div class = 'album-list-photo'>
+            <a href = "{{ photo.get_absolute_url }}">
+                <img class = 'thumbnail' src = "{{ photo.image.thumb_url }}"/>
+            </a>
+        </div>
+        {% endfor %}
+        
+    </div>
+    {% endfor %}
+</div> 
+{% endblock content %}

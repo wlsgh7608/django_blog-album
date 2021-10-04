@@ -1,0 +1,46 @@
+/* album_list.html */
+div.album-list{
+    /* 사진 영역에 대하여 상하 20px, 좌우 50px 여백 */
+    margin:20px 50px;
+}
+div.album-list-photo{
+    /* 사진은 왼쪽에서 오른쪽으로 차례로 배열하게(float) */
+    float:left;
+    width: 150px;
+    height:180px;
+}
+
+/* album_detail.html */
+div.album-list-detail{
+    margin:30px 10px;
+}
+div.album-detail-photo{
+    font-size :10px;
+    font-weight : bold;
+    font-style : italic;
+}
+
+/* photo_detail.html */
+table.photo-detail{
+    margin:30px 50px 0px 50px;
+    border: 1px solid #ccc;
+    padding : 20px 20px;
+}
+table.photo-detail td{
+    width:50%;
+}
+table.photo-detail ul li{
+    font-weight :bold;
+}
+table.photo-deatil ul p{
+    font-style:italic;
+}
+
+/* common */
+img.thumbnail{
+    border:3px solid #ccc;
+}
+
+div.clear_float{
+    clear:both;
+}

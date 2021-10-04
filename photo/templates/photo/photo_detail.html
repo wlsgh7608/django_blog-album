@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}photo_detail.html{% endblock title %}
+
+{% load static %}
+{% block extrastyle %}{% static 'photo/photo.css' %}{% endblock extrastyle %}
+
+{% block content %}
+<div id = 'content'>
+    <h2>{{ object.title }}</h2>
+    <table  class = 'photo-detail'>
+        <tr>
+            <td>
+                <!-- 이미지 클릭하면 사진의 url 링크 연결 연결되는 url은 object.image.url -->
+                <a href = "{{ object.imgae.url }}">
+                    <!-- 원본사진 너비 -->
+                    <img style = 'max-width:100%' src = "{{ object.image.url }}">
+                </a>
+            </td>
+            <td>
+                <!-- tkwlsdp eogks wjdqh cnffur -->
+                <ul>
+                    <li>Photo description</li>
+                    {% if object.description %}
+                    <p>{{ object.description|linebreaks }}</p>
+                    {% else %}
+                    <p>(blank)</p>
+                    {% endif %}
+
+                    <li>Date Upload</li>
+                    <p>{{ object.upload_date }}</p>
+                    <li>Album Name</li>
+                    <p><a href = "{% url 'photo:album_detail' object.album_id %}">{{ object.album.name }}</a></p>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock content %}

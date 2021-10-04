@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}login.html{% endblock title %}
+
+{% load static %}
+{% block extrastyle %}{% static 'css/forms.css' %}{% endblock extrastyle %}
+
+{% block content %}
+<div id = 'content'>
+    <h1>Please Login</h1>
+    <!-- 로그인 폼 출력, 폼을 제출하는 경우 POST방식으로 현재와 동일한 URL로 요청 전송   -->
+    <form action = '.' method ='post'>
+        {% csrf_token %}
+        {% if form.errors %}
+        <p class = 'errornote'>Wrong! Please correct the error(s) below</p>
+        {% endif %}
+
+        <p>Please enter your id and password.</p>
+        <!-- fieldset 태그는 폼에서 비슷한 요소들을 묶어주는 역할,Username과 Password을 입력항목으로 묶어줌 -->
+        <fieldset class = 'aligned'>
+            <!-- Username 입력요소 출력,form 객체는 login()뷰에서 넘겨주는 AUthenticationForm 객체 label_tabl -> "Username :" -->
+            <div class = 'form-row'>
+                {{ form.username.label_tag }}  {{ form.username }}
+            </div>
+            <div class = 'form-row'>
+                {{ form.password.label_tag }}  {{form.password}}
+            </div>
+        </fieldset>
+
+        <div class = 'submit-row'>
+            <input type = 'submit' value = 'Log in'>
+            <!-- 폼을 제출 시 폼의 next항목에 next 변수값 할당, 이문장에 의해 login()뷰가 POST요청시 로그인 성공한 후에, next에 url 저장 -->
+            <input type = 'hidden' name = 'text' value = "{{ next }}">
+        </div>
+
+        <!-- 자바스크립트에 의해 Username에 커서를 위치 -->
+        <script type = 'text/javascript'>
+            document.getElementById('id_username').focus();
+        </script>
+    </form>
+</div>
+{% endblock content %}

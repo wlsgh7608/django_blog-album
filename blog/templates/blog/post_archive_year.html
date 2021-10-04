@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}post_archive_year.html{% endblock title %}
+
+{% block content %}
+<div id = 'content'>
+    
+<h1>Post Archives for {{ year|date:"Y" }}</h1>
+<ul>
+    <!-- date_list 변수는 DateQuerySet 객체 리믓트를 담고 있음. 
+    DateQuerySet 객체 리스트는 QuerySet 객체 리스트에서 날짜 정보만을 추출해 담고 있는 객체 리스트  -->
+
+    {% for date in date_list %}
+    <!-- 연도 메뉴를 한줄에 보여주기 위함 -->
+    <li style = "display: inline;">
+        <!-- 연도 메뉴는 YEar_YYYY 형식의 텍스트로 YYY연도에 작성된, 정확하게는 생성되거나
+        수정된 포스트를 보여주는 URL 링크 -->
+        <a href = "{% url 'blog:post_month_archive' year|date:'Y' date|date:'m' %}">{{ date|date:"F" }}</a>
+    </li>
+    {% endfor %}
+</ul> 
+<br/>
+
+<div>
+    <ul>
+        <!-- object_list : default context variable -->
+        {% for post in object_list %}
+        <!-- 날짜, &nbsp : 빈칸 출력 -->
+        <li>{{ post.modify_date|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+            <a href = "{{ post.get_absolute_url }}" ><strong>{{ post.title }}</strong></a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</div>
+{% endblock content %}

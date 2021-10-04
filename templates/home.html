@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}home.html{% endblock %}
+
+<!--  static  템플릿 태그를 사용하기 위해서는  load staticfiles 문장으로 커스텀 테그 파일 staticfiles을 로드해야함 -->
+{% load static %}
+<!-- extrastyle 블록 재정의. 즉 base.css 스타일 시트 위에 추가적으로 home.css 스타일 시트 지정 -->
+{% block extrastyle %}{% static 'css/home.css' %}{% endblock %}
+
+{% block content %}
+<div id = 'content_home'>
+    <div id = 'homeimg'>
+        <a href = "/"><img src = "{% static 'img/django-actor-big.jpg' %}" style="height:265px;" /></a>
+        <h4 stlye = 'margin: 0;'>This is Djagno powered web site.</h4>
+    </div>
+
+    <hr style = 'margin: 5px 0;'>
+    <h2> Select Application</h2>
+    <table id = 'applist'>
+        <tr>
+            <td><b><i><a href = "{% url 'bookmark:index' %}">Bookmark</a></i></b></td>
+            <td>You can write your own post and share to others.</td>
+            <td class = 'Edit'><i><a href = "#">Add</a></i></td>
+            <td class = 'Edit'><i><a href = "#">Change</a></i></td>
+        </tr>
+        <tr>
+            <td><b><i><a href = "{% url 'blog:index' %}">Blog</a></i></b></td>
+            <td>You can write your own post and share to others</td>
+            <td class = 'Edit'><i><a href = "#">Add</a></i></td>
+            <td class = 'Edit'><i><a href = "#">Change</a></i></td>
+        </tr>
+        <tr>
+            <td><b><i><a href = "{% url 'photo:index' %}">Photo</a></i></b></td>
+            <td>You can write your own post and share to others</td>
+            <td class = 'Edit'><i><a href = "{% url 'photo:photo_add' %}">Add</a></i></td>
+            <td class = 'Edit'><i><a href = "{% url 'photo:photo_change' %}">Change</a></i></td>
+        </tr>
+
+    </table>
+</div>
+{% endblock content %}
+
+{% block footer %}
+<div id = 'footer'>
+    &copy; jinho 2021
+</div>
+{% endblock footer %}

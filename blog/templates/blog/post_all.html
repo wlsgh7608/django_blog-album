@@ -1,0 +1,37 @@
+<!-- HTML 테그가 없으면 장고는 <body> 영역으로 간주 -->
+{% extends 'base.html' %}
+{% block title %}post_all.html{% endblock title %}
+
+{% block content %}
+<div id='content'>
+
+
+    <h1>Blog List</h1>
+
+    <!-- PostLV ㄹ클래스 뷰에서 넘겨주는 컨텍스트 변수 -->
+    {% for post in posts %}
+    <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+    <!-- 객체의 modify_date 값을 "N d, Y" 포맷으로 출력 -->
+    {{ post.modify_date|date:"N d, Y" }}
+    <p>{{ post.description }}</p>
+    {% endfor %}
+    <!-- 공백 -->
+    <br />
+
+    <div>
+        <!-- span 테그 내의 요소들은 같은 줄에 배치 페이징을 위함 -->
+        <span>
+            <!-- page_obj은 Page 객체가 들어 있는 컨텍스트 변쉬7 -->
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Previous Page</a>
+            {% endif %}
+
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next Page</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock content %}
